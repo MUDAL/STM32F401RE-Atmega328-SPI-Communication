@@ -1,10 +1,6 @@
-#include <avr/io.h>
-#define F_CPU 16000000
-
 /*
- * Simple code to receive data from the stm32f401re nucleo board via
- * SPI communication. The received data can be checked on the serial monitor
- * using UART.
+ * Simple code to receive data from and transmit data to the stm32f401re nucleo board via
+ * SPI communication.
  * 
  * Whenever the SPI receive buffer contains data, an interrupt is raised and the
  * data is read.
@@ -19,19 +15,25 @@
 
 volatile char receivedData;
 
-int main(void){
+void setup()
+{
   //Configuration code
   cli();
-  Serial.begin(9600);
   DDRB |= (1<<DDB4);//Configure MISO pin(PB4) as output
   SPCR = (1<<SPIE)|(1<<SPE);//Enable SPI interrupt, Enable SPI
   sei();
+}
+
+void loop()
+{
   
-  while(1){}
 }
 
-ISR(SPI_STC_vect){
+ISR(SPI_STC_vect)
+{
   receivedData = SPDR;
-  Serial.println(receivedData);
+  if (receivedData == 'r')
+  {
+    SPDR = 'M';
+  }
 }
-
