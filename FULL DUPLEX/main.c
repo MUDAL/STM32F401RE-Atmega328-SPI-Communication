@@ -9,8 +9,8 @@
 //via SPI communication.
 
 //When the onboard button on the stm32 nucleo board is pressed,
-//a character is sent to the Atmega328 via SPI. The character received by
-//the Atmega328 can be viewed on the serial monitor of the Arduino IDE using UART.
+//a character is sent to the Atmega328 via SPI. The Atmega328 sends
+//a character as feedback.
 
 //Connections:
 //Onboard button --> PC13
